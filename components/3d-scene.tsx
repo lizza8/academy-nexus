@@ -57,7 +57,7 @@ function AnimatedText() {
     <Center>
       <Text3D
         ref={textRef}
-        font="/fonts/Inter_Bold.json"
+        font="/fonts/Geist_Bold.json"
         size={0.8}
         height={0.2}
         curveSegments={12}
@@ -77,7 +77,18 @@ function AnimatedText() {
 export function Scene3D() {
   return (
     <div className="w-full h-[600px] rounded-3xl overflow-hidden glass-panel border-2 border-primary/30">
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+      <Canvas
+        camera={{ position: [0, 0, 8], fov: 50 }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener("webglcontextlost", (e) => {
+            console.log("[v0] WebGL context lost, preventing default")
+            e.preventDefault()
+          })
+          gl.domElement.addEventListener("webglcontextrestored", () => {
+            console.log("[v0] WebGL context restored")
+          })
+        }}
+      >
         <color attach="background" args={["#0a0a15"]} />
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />

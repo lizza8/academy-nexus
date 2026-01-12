@@ -15,7 +15,8 @@ export function TestimonialsSection() {
         "NEXUS transformed my career completely. I went from knowing basic HTML to landing my dream job at Google in just 8 months. The instructors are phenomenal and the curriculum is industry-relevant.",
       rating: 5,
       course: "Full-Stack Development",
-      image: "young hispanic male software engineer smiling",
+      initials: "AM",
+      color: "from-purple-500 to-blue-500",
     },
     {
       name: "Priya Sharma",
@@ -24,7 +25,8 @@ export function TestimonialsSection() {
         "The Data Science course exceeded my expectations. Real-world projects, hands-on mentorship, and career support made all the difference. I tripled my salary!",
       rating: 5,
       course: "Data Science & ML",
-      image: "indian female data scientist professional",
+      initials: "PS",
+      color: "from-cyan-500 to-purple-500",
     },
     {
       name: "David Kim",
@@ -33,7 +35,8 @@ export function TestimonialsSection() {
         "As someone transitioning careers, I needed structured learning with expert guidance. NEXUS provided exactly that. The portfolio I built helped me land interviews at top companies.",
       rating: 5,
       course: "UI/UX Design",
-      image: "asian male designer creative professional",
+      initials: "DK",
+      color: "from-pink-500 to-orange-500",
     },
     {
       name: "Sarah Johnson",
@@ -42,7 +45,8 @@ export function TestimonialsSection() {
         "The Cloud Computing course gave me practical skills I use daily. From zero cloud knowledge to managing production infrastructure at Amazon - incredible journey!",
       rating: 5,
       course: "Cloud & DevOps",
-      image: "caucasian female engineer tech professional",
+      initials: "SJ",
+      color: "from-blue-500 to-cyan-500",
     },
     {
       name: "Mohammed Al-Rashid",
@@ -51,7 +55,8 @@ export function TestimonialsSection() {
         "The Digital Marketing course is comprehensive and actionable. I grew our startup from 0 to 50K users in 6 months. The ROI has been astronomical!",
       rating: 5,
       course: "Digital Marketing",
-      image: "middle eastern male marketing professional smiling",
+      initials: "MA",
+      color: "from-purple-500 to-pink-500",
     },
     {
       name: "Lisa Chen",
@@ -60,7 +65,8 @@ export function TestimonialsSection() {
         "Building mobile apps seemed daunting until I took this course. Now I'm shipping features to millions of users at Meta!",
       rating: 5,
       course: "Mobile Development",
-      image: "asian female mobile developer professional",
+      initials: "LC",
+      color: "from-orange-500 to-red-500",
     },
   ]
 
@@ -134,12 +140,14 @@ export function TestimonialsSection() {
 
                 <div className="flex items-center gap-4 pt-4 border-t border-border">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent rounded-full blur-md opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <img
-                      src={`/.jpg?height=56&width=56&query=${testimonial.image}`}
-                      alt={testimonial.name}
-                      className="relative h-14 w-14 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-4 group-hover:ring-primary/40 transition-all"
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${testimonial.color} rounded-full blur-md opacity-50 group-hover:opacity-100 transition-opacity`}
                     />
+                    <div
+                      className={`relative h-14 w-14 rounded-full bg-gradient-to-br ${testimonial.color} ring-2 ring-primary/20 group-hover:ring-4 group-hover:ring-primary/40 transition-all flex items-center justify-center`}
+                    >
+                      <span className="text-white font-bold text-lg">{testimonial.initials}</span>
+                    </div>
                   </div>
                   <div>
                     <div className="font-bold text-foreground">{testimonial.name}</div>
