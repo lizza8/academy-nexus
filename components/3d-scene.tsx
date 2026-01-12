@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Float, Text3D, Center } from "@react-three/drei"
+import { OrbitControls, Float } from "@react-three/drei"
 import type * as THREE from "three"
 
 function FloatingShape({
@@ -53,25 +53,7 @@ function AnimatedText() {
     }
   })
 
-  return (
-    <Center>
-      <Text3D
-        ref={textRef}
-        font="/fonts/Geist_Bold.json"
-        size={0.8}
-        height={0.2}
-        curveSegments={12}
-        bevelEnabled
-        bevelThickness={0.02}
-        bevelSize={0.02}
-        bevelOffset={0}
-        bevelSegments={5}
-      >
-        {"LEARN"}
-        <meshStandardMaterial color="#7c3aed" emissive="#7c3aed" emissiveIntensity={0.3} />
-      </Text3D>
-    </Center>
-  )
+  return null
 }
 
 export function Scene3D() {
@@ -81,7 +63,6 @@ export function Scene3D() {
         camera={{ position: [0, 0, 8], fov: 50 }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener("webglcontextlost", (e) => {
-            console.log("[v0] WebGL context lost, preventing default")
             e.preventDefault()
           })
           gl.domElement.addEventListener("webglcontextrestored", () => {
@@ -94,8 +75,7 @@ export function Scene3D() {
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#06b6d4" />
 
-        <AnimatedText />
-
+        {/* Removed AnimatedText component */}
         <FloatingShape position={[-3, 2, 0]} color="#7c3aed" shape="box" />
         <FloatingShape position={[3, -1, 0]} color="#06b6d4" shape="sphere" />
         <FloatingShape position={[0, -2, -2]} color="#ec4899" shape="torus" />

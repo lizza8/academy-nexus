@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   description:
     "Join thousands of students building their dream careers with our industry-leading online courses. Expert instructors, proven curriculum, real-world outcomes.",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
