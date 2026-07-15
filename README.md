@@ -1,30 +1,22 @@
-# Academy website design
+# Academy Nexus — TBC x USAID
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Recreation of the TBC x USAID Academy front-end page (TBC IT Academy homework-style clone of https://www.tbcacademy.ge/usaid).
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/lizamamitashvili07-2760s-projects/v0-academy-website-design)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/iv8yiYhSqoG)
+## Run locally
 
-## Overview
+```bash
+pnpm install
+pnpm dev
+```
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+Open [http://localhost:3000](http://localhost:3000).
 
-## Deployment
+## Sections
 
-Your project is live at:
-
-**[https://vercel.com/lizamamitashvili07-2760s-projects/v0-academy-website-design](https://vercel.com/lizamamitashvili07-2760s-projects/v0-academy-website-design)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.app/chat/iv8yiYhSqoG](https://v0.app/chat/iv8yiYhSqoG)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- Fixed header with desktop nav and mobile burger menu
+- Hero banner (TBC x USAID)
+- Program information
+- Course grid (9 courses)
+- Partners slider
+- FAQ accordion
+- Footer with terms modal
