@@ -1,0 +1,993 @@
+@font-face {
+  font-display: block;
+  font-family: "TBC Body";
+  src: url("https://static.wixstatic.com/ufonts/643d94_dd28b3957391427eb54de1c9eff7cfb1/woff2/file.woff2")
+      format("woff2"),
+    url("https://static.wixstatic.com/ufonts/643d94_dd28b3957391427eb54de1c9eff7cfb1/woff/file.woff")
+      format("woff");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "TBC Display";
+  src: url("https://static.wixstatic.com/ufonts/643d94_f52303b2efea42e1b4aeed119e42672e/woff2/file.woff2")
+      format("woff2"),
+    url("https://static.wixstatic.com/ufonts/643d94_f52303b2efea42e1b4aeed119e42672e/woff/file.woff")
+      format("woff");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "TBC Accent";
+  src: url("https://static.wixstatic.com/ufonts/dd97f4_7737b5e7be24426aa35c9f4311c1de96/woff2/file.woff2")
+      format("woff2"),
+    url("https://static.wixstatic.com/ufonts/dd97f4_7737b5e7be24426aa35c9f4311c1de96/woff/file.woff")
+      format("woff");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "TBC Link";
+  src: url("https://static.wixstatic.com/ufonts/643d94_93c16d86ec9d47d0a2a36894fbdd54fd/woff2/file.woff2")
+      format("woff2"),
+    url("https://static.wixstatic.com/ufonts/643d94_93c16d86ec9d47d0a2a36894fbdd54fd/woff/file.woff")
+      format("woff");
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "TBC Body", sans-serif;
+  background-color: #161616;
+  color: #f4f4f4;
+}
+
+a {
+  color: inherit;
+}
+
+.tbc-page .container {
+  margin: 0 auto;
+  max-width: 980px;
+  width: 100%;
+}
+
+.tbc-page .main-container {
+  padding-top: 90px;
+  background-color: #d5d5d5;
+}
+
+/* Header */
+.tbc-page .site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #1a1e1f;
+  transition: background-color 0.4s, transform 0.4s;
+  width: 100%;
+  height: 90px;
+  z-index: 100;
+}
+
+.tbc-page .site-header.scrolled {
+  background-color: rgba(26, 30, 31, 0.9);
+}
+
+.tbc-page .site-header.hidden-up {
+  transform: translateY(-100%);
+}
+
+.tbc-page .mobile-menu-toggle {
+  display: none;
+}
+
+.tbc-page .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.tbc-page .menu-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.tbc-page .menu-list li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0 15px;
+  transition: color 0.4s;
+}
+
+.tbc-page .menu-list li a:hover {
+  color: #00a3e0;
+}
+
+.tbc-page .header-logo img {
+  width: 182px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.tbc-page .overlay-fade {
+  display: none;
+}
+
+.tbc-page .mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.tbc-page .mobile-menu::after {
+  content: "";
+  background-color: #222222;
+  height: 100vh;
+  width: 60vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  transform: translateX(100%);
+  transition: all ease-out 0.5s;
+}
+
+.tbc-page .mobile-menu .mobile-menu-items {
+  display: block;
+  text-align: right;
+  margin-top: 90px;
+  padding: 0 8px;
+  position: relative;
+  z-index: 10;
+  list-style: none;
+}
+
+.tbc-page .mobile-menu .mobile-menu-items li {
+  margin: 20px 0;
+}
+
+.tbc-page .mobile-menu .mobile-menu-items li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0 20px;
+  transition: color 0.4s;
+}
+
+.tbc-page .overlay-fade.active .mobile-menu::after {
+  transform: translateX(0);
+}
+
+.tbc-page .overlay-fade.active .mobile-menu-items li {
+  animation: mobileMenuAnime 0.4s linear both;
+}
+
+@keyframes mobileMenuAnime {
+  0% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Banner */
+.tbc-page .banner-container {
+  background: url("/assets/images/common-images/banner.jpg") no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 352px;
+}
+
+.tbc-page .banner-title h1 {
+  margin-bottom: 20px;
+  color: #f4f4f4;
+  font-family: "TBC Display", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.tbc-page .banner-title h2 {
+  font-size: 34px;
+  color: #f4f4f4;
+  font-family: "TBC Display", sans-serif;
+  font-weight: 400;
+}
+
+/* Information */
+.tbc-page .information-container {
+  background-color: #2b2b2b;
+  width: 100%;
+  display: flex;
+  padding: 56px 0;
+}
+
+.tbc-page .course-description p {
+  color: #f4f4f4;
+  font-size: 28px;
+  line-height: 1.4;
+}
+
+.tbc-page .read-more {
+  margin-top: 43px;
+}
+
+.tbc-page .read-more-link {
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.4s;
+  font-size: 20px;
+  color: #00aef3;
+  font-family: "TBC Accent", sans-serif;
+}
+
+.tbc-page .read-more-link:hover {
+  color: #aaaaaa;
+}
+
+/* Courses */
+.tbc-page .learning-courses {
+  background-color: #161616;
+  display: flex;
+  padding: 34px 0 35px;
+}
+
+.tbc-page .learning-courses .section-title {
+  margin: 0 0 67px;
+}
+
+.tbc-page .learning-courses .section-title h2 {
+  font-size: 24px;
+  font-weight: 300;
+  color: #dbdbdb;
+}
+
+.tbc-page .courses-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.tbc-page .course-box-wrapper {
+  width: 33.3%;
+  padding: 0 35px 25px 0;
+}
+
+.tbc-page .course-box {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(85, 85, 85);
+  border-radius: 6px;
+  height: 100%;
+}
+
+.tbc-page .course-img {
+  height: 150px;
+}
+
+.tbc-page .course-img img {
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  object-fit: cover;
+}
+
+.tbc-page .course-body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 34px 10px 20px 20px;
+}
+
+.tbc-page .course-title h3 {
+  font-size: 18px;
+  font-weight: 300;
+  color: #f4f4f4;
+}
+
+.tbc-page .registration-status {
+  margin-top: 25px;
+  min-height: 100px;
+}
+
+.tbc-page .registration-status p {
+  font-size: 14px;
+  font-weight: 300;
+  color: #f4f4f4;
+}
+
+.tbc-page .course-details {
+  display: flex;
+  align-items: center;
+}
+
+.tbc-page .course-details img {
+  width: 17px;
+  height: 16px;
+  object-fit: cover;
+  margin: 12px 11px 7px 0;
+}
+
+.tbc-page .course-details a {
+  font-size: 16px;
+  font-weight: 300;
+  color: #00aeef;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.4s;
+  font-family: "TBC Link", sans-serif;
+}
+
+.tbc-page .course-details a:hover {
+  color: #0080b0;
+}
+
+/* Slider */
+.tbc-page .slider-section {
+  background-color: #2b2b2b;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 0 31px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.tbc-page .slider-title h2 {
+  color: #f4f4f4;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.tbc-page .slider-arrow {
+  width: 18px;
+  height: 35px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.4s;
+  fill: #fff;
+  flex-shrink: 0;
+}
+
+.tbc-page .slider-arrow:hover {
+  fill: #969494;
+}
+
+.tbc-page #next-arrow {
+  transform: rotate(180deg);
+}
+
+.tbc-page .slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 224px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.tbc-page .slide {
+  max-width: 980px;
+  width: 100%;
+  animation: sliderAnimation 0.7s linear both;
+}
+
+.tbc-page .slides-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tbc-page .slides-box img {
+  height: 80px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+.tbc-page .last-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.tbc-page .last-slide img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tbc-page .slider-bullets {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tbc-page .slider-bullets .bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #e8e6e6;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border: none;
+  padding: 0;
+}
+
+.tbc-page .slider-bullets .bullet.active {
+  background-color: #fff;
+}
+
+@keyframes sliderAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes sliderAnimationRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sliderAnimationLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.tbc-page .slideRightAnime {
+  animation: sliderAnimationRight 0.4s linear both !important;
+}
+
+.tbc-page .slideLeftAnime {
+  animation: sliderAnimationLeft 0.4s linear both !important;
+}
+
+/* FAQ */
+.tbc-page .faq-section {
+  position: relative;
+  background-color: #161616;
+  width: 100%;
+  display: flex;
+}
+
+.tbc-page .container-faq {
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 100px 40px;
+}
+
+.tbc-page .view-all {
+  text-decoration: none;
+  color: #00aef3;
+  font-size: 20px;
+  transition: 0.4s;
+  font-family: "TBC Accent", sans-serif;
+}
+
+.tbc-page .view-all:hover {
+  color: #aaaaaa;
+}
+
+.tbc-page .view-all-responsive {
+  display: none;
+  text-align: center;
+}
+
+.tbc-page .faq-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+.tbc-page .faq-title h2 {
+  font-weight: 300;
+  font-size: 24px;
+  color: #f4f4f4;
+}
+
+.tbc-page .faq-item {
+  cursor: pointer;
+  position: relative;
+  padding: 30px 0;
+  border-bottom: 1px solid #353131;
+}
+
+.tbc-page .faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tbc-page .faq-question h3 {
+  font-weight: 300;
+  font-size: 18px;
+  color: #f4f4f4;
+}
+
+.tbc-page .faq-question img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+
+.tbc-page .faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease-in-out;
+}
+
+.tbc-page .faq-answer.open {
+  max-height: 800px;
+}
+
+.tbc-page .faq-answer p {
+  font-weight: 300;
+  font-size: 14px;
+  color: #f4f4f4;
+  line-height: 2;
+  margin-top: 30px;
+}
+
+.tbc-page .faq-answer .level {
+  font-weight: 700;
+}
+
+.tbc-page .faq-answer .info-about-course {
+  margin: 30px 24px;
+}
+
+.tbc-page .rotate-arrow {
+  transform: rotate(180deg);
+}
+
+/* Footer */
+.tbc-page .site-footer {
+  background-color: #1a1e1f;
+  display: flex;
+}
+
+.tbc-page .footer-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 64px 0 43px;
+}
+
+.tbc-page .tbc-logo {
+  width: 106px;
+  height: 30px;
+}
+
+.tbc-page .tbc-logo img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.tbc-page .copyright-text {
+  margin: 27px 0 15px;
+}
+
+.tbc-page .copyright-text span,
+.tbc-page .copyright-text a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.tbc-page .terms-link {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.4s;
+  font-size: 14px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.tbc-page .terms-link:hover {
+  color: #aaaaaa;
+}
+
+.tbc-page .contact-box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.tbc-page .social-media-logos {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tbc-page .social-media-logos img {
+  width: 39px;
+  height: 39px;
+  object-fit: cover;
+}
+
+.tbc-page .link {
+  display: none;
+}
+
+.tbc-page .contact-email-responsive {
+  display: block;
+}
+
+.tbc-page .contact-link {
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  padding: 7px 30px;
+  background-color: #00aef3;
+  transition: 0.4s;
+  display: inline-block;
+}
+
+.tbc-page .contact-link:hover {
+  background-color: #d5d5d5;
+  color: #353131;
+}
+
+.tbc-page .facebook-logo {
+  margin-right: 7px;
+}
+
+/* Terms modal */
+.tbc-page .footer-terms {
+  background-color: rgba(22, 22, 22, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  display: none;
+}
+
+.tbc-page .footer-terms.active {
+  display: block;
+}
+
+.tbc-page .footer-terms-container {
+  background-color: #2b2b2b;
+  width: 50%;
+  height: 100vh;
+  padding: 100px 30px 50px 50px;
+  margin-left: auto;
+  position: relative;
+  transform: translateX(100%);
+  overflow-y: scroll;
+}
+
+.tbc-page .footer-terms-container::-webkit-scrollbar {
+  width: 0;
+}
+
+.tbc-page .footer-terms.active .footer-terms-container {
+  animation: footerTermAnime 0.4s cubic-bezier(0.54, -0.81, 0.57, 0.57) forwards;
+}
+
+.tbc-page .footer-terms-close {
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.tbc-page .footer-terms-close img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tbc-page .terms-title {
+  color: #8c8c8c;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.tbc-page .footer-terms-text p {
+  color: #8c8c8c;
+  font-size: 14px;
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.tbc-page .footer-terms-text h5 {
+  color: #8c8c8c;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.tbc-page .footer-terms-text a {
+  color: #8c8c8c;
+  font-weight: 700;
+}
+
+.tbc-page .footer-terms-close-btn {
+  background-color: #dcdcdc;
+  color: #1c1c1c;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.4s ease;
+  margin-top: 80px;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+}
+
+.tbc-page .footer-terms-close-btn:hover {
+  background-color: #00aef3;
+  color: #fff;
+}
+
+@keyframes footerTermAnime {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .tbc-page .container {
+    padding: 0 24px;
+  }
+
+  .tbc-page .header-logo img {
+    width: 155px;
+    height: 100%;
+  }
+
+  .tbc-page .main-navigation {
+    display: none;
+  }
+
+  .tbc-page .mobile-menu-toggle {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 21px;
+    width: 26px;
+    transition: transform 0.33s ease-out;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .tbc-page .menu-bar {
+    background-color: #fff;
+    height: 3px;
+    width: 27px;
+    border-radius: 2px;
+  }
+
+  .tbc-page .bar1,
+  .tbc-page .bar3 {
+    width: 50%;
+    transition: transform 0.33s cubic-bezier(0.54, -0.81, 0.57, 0.57);
+  }
+
+  .tbc-page .bar3 {
+    align-self: flex-end;
+  }
+
+  .tbc-page .open-menu {
+    display: flex;
+    flex-direction: column;
+    transform: rotate(-45deg);
+  }
+
+  .tbc-page .open-menu .bar1 {
+    transform: rotate(-90deg) translateX(4px);
+    transform-origin: right;
+  }
+
+  .tbc-page .open-menu .bar2 {
+    width: 27px !important;
+  }
+
+  .tbc-page .open-menu .bar3 {
+    transform: rotate(-90deg) translateX(-4px);
+    transform-origin: left;
+  }
+
+  .tbc-page .overlay-fade {
+    position: absolute;
+    top: -25px;
+    right: 0;
+    display: block;
+    background-color: rgba(34, 34, 34, 0.5);
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.4s;
+  }
+
+  .tbc-page .overlay-fade.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tbc-page .banner-container {
+    background: url("/assets/images/common-images/banner.jpg") no-repeat center;
+    background-size: cover;
+    height: 300px;
+  }
+
+  .tbc-page .banner-title h1 {
+    font-size: 28px;
+    margin-bottom: 2px;
+  }
+
+  .tbc-page .banner-title h2 {
+    font-size: 26px;
+  }
+
+  .tbc-page .information-container {
+    padding: 32px 0;
+  }
+
+  .tbc-page .course-description p {
+    font-size: 15px;
+  }
+
+  .tbc-page .read-more {
+    margin-top: 32px;
+  }
+
+  .tbc-page .read-more-link {
+    font-size: 16px;
+  }
+
+  .tbc-page .learning-courses .section-title {
+    margin: 0 0 30px;
+  }
+
+  .tbc-page .course-box-wrapper {
+    width: 100%;
+    padding: 0 0 25px;
+  }
+
+  .tbc-page .slides-box {
+    flex-direction: column;
+  }
+
+  .tbc-page .slider-container {
+    height: 370px;
+  }
+
+  .tbc-page .slider-arrow {
+    display: none;
+  }
+
+  .tbc-page .slider-title h2 {
+    font-size: 20px;
+  }
+
+  .tbc-page .slides-box img {
+    margin: 20px;
+  }
+
+  .tbc-page .slider-bullets {
+    bottom: 40px;
+  }
+
+  .tbc-page .container-faq {
+    padding: 50px 30px;
+  }
+
+  .tbc-page .faq-item {
+    padding: 25px 0;
+  }
+
+  .tbc-page .view {
+    display: none;
+  }
+
+  .tbc-page .view-all-responsive {
+    display: block;
+    margin-top: 30px;
+  }
+
+  .tbc-page .faq-title h2 {
+    font-size: 22px;
+  }
+
+  .tbc-page .contact-email-responsive {
+    display: none;
+  }
+
+  .tbc-page .link {
+    display: block;
+    margin-top: 40px;
+  }
+
+  .tbc-page .contact-box {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .tbc-page .social-media-logos {
+    margin-bottom: 15px;
+  }
+
+  .tbc-page .facebook-logo {
+    margin-right: 15px;
+  }
+
+  .tbc-page .footer-terms-container {
+    width: 85%;
+    padding: 80px 32px 40px 30px;
+  }
+
+  .tbc-page .footer-terms-close {
+    top: 40px;
+    right: 30px;
+  }
+}
