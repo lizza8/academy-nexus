@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colorful Code Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #050510;
+      --bg1: #0a0a1f;
+      --panel: rgba(12, 14, 35, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --kw: #ff6bcb;
+      --fn: #00f5ff;
+      --str: #ffe66d;
+      --num: #7cff7c;
+      --cmt: #6b7a99;
+      --type: #b388ff;
+      --op: #ff9f43;
+      --var: #54a0ff;
+      --tag: #ff4757;
+      --attr: #2ed573;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      background: var(--bg0);
+      color: #e8ecff;
+      overflow-x: hidden;
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(255, 0, 128, 0.25), transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 10%, rgba(0, 245, 255, 0.2), transparent 45%),
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(124, 255, 124, 0.15), transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      0% { filter: hue-rotate(0deg) saturate(1); }
+      100% { filter: hue-rotate(25deg) saturate(1.2); }
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      background: linear-gradient(90deg, #ff6bcb, #00f5ff, #7cff7c, #ffe66d, #b388ff);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+      text-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .subtitle {
+      margin-top: 0.75rem;
+      color: #8892b0;
+      font-size: 0.95rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      position: relative;
+      border-radius: 14px;
+      padding: 2px;
+      background: linear-gradient(135deg, #ff6bcb, #00f5ff, #7cff7c, #ffe66d);
+      background-size: 400% 400%;
+      animation: border-flow 8s ease infinite;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    @keyframes border-flow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .card-inner {
+      background: var(--panel);
+      border-radius: 12px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dots span:nth-child(1) { background: #ff5f57; }
+    .dots span:nth-child(2) { background: #febc2e; }
+    .dots span:nth-child(3) { background: #28c840; }
+
+    .lang {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #00f5ff;
+    }
+
+    pre {
+      margin: 0;
+      padding: 1rem 1.1rem 1.2rem;
+      font-size: 0.72rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      tab-size: 2;
+    }
+
+    .kw { color: var(--kw); font-weight: 600; }
+    .fn { color: var(--fn); }
+    .str { color: var(--str); }
+    .num { color: var(--num); }
+    .cmt { color: var(--cmt); font-style: italic; }
+    .type { color: var(--type); }
+    .op { color: var(--op); }
+    .var { color: var(--var); }
+    .tag { color: var(--tag); }
+    .attr { color: var(--attr); }
+    .decor { color: #fd79a8; }
+    .macro { color: #e17055; }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: #5c6b8a;
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <main>
+    <header>
+      <h1>COLORFUL CODE VAULT</h1>
+      <p class="subtitle">A neon archive of languages, patterns, and pure syntax joy.</p>
+    </header>
+
+    <div class="gallery">
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">TypeScript</span></div>
+        <pre><code><span class="kw">async function</span> <span class="fn">launchRocket</span><span class="op">(</span><span class="var">payload</span><span class="op">:</span> <span class="type">Payload</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">const</span> <span class="var">orbit</span> <span class="op">=</span> <span class="kw">await</span> <span class="fn">computeTrajectory</span><span class="op">({</span>
+    <span class="var">altitude</span><span class="op">:</span> <span class="num">420_000</span><span class="op">,</span>
+    <span class="var">inclination</span><span class="op">:</span> <span class="num">51.6</span><span class="op">,</span>
+    <span class="var">color</span><span class="op">:</span> <span class="str">"electric-cyan"</span><span class="op">,</span>
+  <span class="op">})</span><span class="op">;</span>
+  <span class="kw">return</span> <span class="op">{</span> <span class="op">...</span><span class="var">orbit</span><span class="op">,</span> <span class="var">sparkles</span><span class="op">:</span> <span class="kw">true</span> <span class="op">}</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Python</span></div>
+        <pre><code><span class="kw">from</span> <span class="var">dataclasses</span> <span class="kw">import</span> <span class="var">dataclass</span>
+
+<span class="decor">@dataclass</span><span class="op">(</span><span class="var">frozen</span><span class="op">=</span><span class="kw">True</span><span class="op">)</span>
+<span class="kw">class</span> <span class="type">NeonPalette</span><span class="op">:</span>
+    <span class="var">magenta</span><span class="op">:</span> <span class="type">str</span> <span class="op">=</span> <span class="str">"#ff6bcb"</span>
+    <span class="var">cyan</span><span class="op">:</span>    <span class="type">str</span> <span class="op">=</span> <span class="str">"#00f5ff"</span>
+    <span class="var">lime</span><span class="op">:</span>    <span class="type">str</span> <span class="op">=</span> <span class="str">"#7cff7c"</span>
+
+<span class="kw">def</span> <span class="fn">rainbow_stream</span><span class="op">(</span><span class="var">n</span><span class="op">:</span> <span class="type">int</span><span class="op">)</span> <span class="op">-></span> <span class="type">list</span><span class="op">[</span><span class="type">str</span><span class="op">]</span><span class="op">:</span>
+    <span class="kw">return</span> <span class="op">[</span><span class="fn">f</span><span class="str">"hue-{i * 37 % 360}"</span> <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span><span class="op">(</span><span class="var">n</span><span class="op">)</span><span class="op">]</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Rust</span></div>
+        <pre><code><span class="kw">use</span> <span class="var">std</span><span class="op">::</span><span class="type">sync</span><span class="op">::</span><span class="type">Arc</span><span class="op">;</span>
+
+<span class="kw">enum</span> <span class="type">Glow</span> <span class="op">{</span> <span class="var">Pulse</span><span class="op">,</span> <span class="var">Strobe</span><span class="op">,</span> <span class="var">Aurora</span> <span class="op">}</span>
+
+<span class="kw">fn</span> <span class="fn">paint_pixels</span><span class="op">(</span><span class="var">buf</span><span class="op">:</span> <span class="op">&amp;mut</span> <span class="op">[</span><span class="type">u32</span><span class="op">]</span><span class="op">,</span> <span class="var">mode</span><span class="op">:</span> <span class="type">Glow</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">let</span> <span class="var">shader</span> <span class="op">=</span> <span class="fn">Arc</span><span class="op">::</span><span class="fn">new</span><span class="op">(</span><span class="fn">load_wgsl</span><span class="op">(</span><span class="str">"neon.wgsl"</span><span class="op">)</span><span class="op">)</span><span class="op">;</span>
+    <span class="kw">match</span> <span class="var">mode</span> <span class="op">{</span>
+        <span class="type">Glow</span><span class="op">::</span><span class="var">Aurora</span> <span class="op">=></span> <span class="fn">dispatch</span><span class="op">(</span><span class="var">buf</span><span class="op">,</span> <span class="op">&amp;</span><span class="var">shader</span><span class="op">)</span><span class="op">,</span>
+        <span class="kw">_</span> <span class="op">=></span> <span class="op">()</span><span class="op">,</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Go</span></div>
+        <pre><code><span class="kw">package</span> <span class="var">main</span>
+
+<span class="kw">type</span> <span class="type">Spectrum</span> <span class="kw">struct</span> <span class="op">{</span>
+    <span class="var">RGB</span> <span class="op">[</span><span class="num">3</span><span class="op">]</span><span class="type">uint8</span>
+    <span class="var">Name</span> <span class="type">string</span>
+<span class="op">}</span>
+
+<span class="kw">func</span> <span class="fn">main</span><span class="op">()</span> <span class="op">{</span>
+    <span class="var">colors</span> <span class="op">:=</span> <span class="op">[]</span><span class="type">Spectrum</span><span class="op">{</span>
+        <span class="op">{</span><span class="op">[</span><span class="num">3</span><span class="op">]</span><span class="type">uint8</span><span class="op">{</span><span class="num">255</span><span class="op">,</span> <span class="num">107</span><span class="op">,</span> <span class="num">203</span><span class="op">}</span><span class="op">,</span> <span class="str">"magenta"</span><span class="op">}</span><span class="op">,</span>
+        <span class="op">{</span><span class="op">[</span><span class="num">3</span><span class="op">]</span><span class="type">uint8</span><span class="op">{</span><span class="num">0</span><span class="op">,</span> <span class="num">245</span><span class="op">,</span> <span class="num">255</span><span class="op">}</span><span class="op">,</span> <span class="str">"cyan"</span><span class="op">}</span><span class="op">,</span>
+    <span class="op">}</span>
+    <span class="kw">for</span> <span class="var">_</span><span class="op">,</span> <span class="var">c</span> <span class="op">:=</span> <span class="kw">range</span> <span class="var">colors</span> <span class="op">{</span> <span class="fn">println</span><span class="op">(</span><span class="var">c</span><span class="op">.</span><span class="var">Name</span><span class="op">)</span> <span class="op">}</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">SQL</span></div>
+        <pre><code><span class="kw">WITH</span> <span class="var">palette</span> <span class="kw">AS</span> <span class="op">(</span>
+  <span class="kw">SELECT</span> <span class="num">1</span> <span class="kw">AS</span> <span class="var">id</span><span class="op">,</span> <span class="str">'#ff6bcb'</span> <span class="kw">AS</span> <span class="var">hex</span><span class="op">,</span> <span class="str">'pink'</span> <span class="kw">AS</span> <span class="var">vibe</span>
+  <span class="kw">UNION ALL</span>
+  <span class="kw">SELECT</span> <span class="num">2</span><span class="op">,</span> <span class="str">'#00f5ff'</span><span class="op">,</span> <span class="str">'ice'</span>
+  <span class="kw">UNION ALL</span>
+  <span class="kw">SELECT</span> <span class="num">3</span><span class="op">,</span> <span class="str">'#7cff7c'</span><span class="op">,</span> <span class="str">'mint'</span>
+<span class="op">)</span>
+<span class="kw">SELECT</span> <span class="var">hex</span><span class="op">,</span> <span class="fn">COUNT</span><span class="op">(</span><span class="op">*</span><span class="op">)</span> <span class="kw">OVER</span> <span class="op">(</span><span class="op">)</span> <span class="kw">AS</span> <span class="var">total_swatches</span>
+<span class="kw">FROM</span> <span class="var">palette</span>
+<span class="kw">ORDER BY</span> <span class="var">id</span><span class="op">;</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">CSS</span></div>
+        <pre><code><span class="var">.hyper-button</span> <span class="op">{</span>
+  <span class="attr">background</span><span class="op">:</span> <span class="fn">linear-gradient</span><span class="op">(</span>
+    <span class="num">120deg</span><span class="op">,</span>
+    <span class="fn">hsl</span><span class="op">(</span><span class="num">320</span> <span class="num">100%</span> <span class="num">65%</span><span class="op">)</span><span class="op">,</span>
+    <span class="fn">hsl</span><span class="op">(</span><span class="num">190</span> <span class="num">100%</span> <span class="num">50%</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">;</span>
+  <span class="attr">box-shadow</span><span class="op">:</span> <span class="num">0</span> <span class="num">0</span> <span class="num">24px</span> <span class="fn">rgba</span><span class="op">(</span><span class="num">0</span><span class="op">,</span> <span class="num">245</span><span class="op">,</span> <span class="num">255</span><span class="op">,</span> <span class="num">0.45</span><span class="op">)</span><span class="op">;</span>
+  <span class="attr">animation</span><span class="op">:</span> <span class="var">pulse-glow</span> <span class="num">2.4s</span> <span class="var">ease-in-out</span> <span class="var">infinite</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">HTML</span></div>
+        <pre><code><span class="op">&lt;</span><span class="tag">section</span> <span class="attr">class</span><span class="op">=</span><span class="str">"neon-stage"</span> <span class="attr">aria-label</span><span class="op">=</span><span class="str">"Code theater"</span><span class="op">&gt;</span>
+  <span class="op">&lt;</span><span class="tag">canvas</span> <span class="attr">id</span><span class="op">=</span><span class="str">"particles"</span> <span class="attr">width</span><span class="op">=</span><span class="str">"1920"</span> <span class="attr">height</span><span class="op">=</span><span class="str">"1080"</span><span class="op">&gt;&lt;/</span><span class="tag">canvas</span><span class="op">&gt;</span>
+  <span class="op">&lt;</span><span class="tag">h2</span> <span class="attr">style</span><span class="op">=</span><span class="str">"color: var(--cyan)"</span><span class="op">&gt;</span>Syntax Symphony<span class="op">&lt;/</span><span class="tag">h2</span><span class="op">&gt;</span>
+<span class="op">&lt;/</span><span class="tag">section</span><span class="op">&gt;</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">JavaScript</span></div>
+        <pre><code><span class="kw">const</span> <span class="fn">compose</span> <span class="op">=</span> <span class="op">(</span><span class="op">...</span><span class="var">fns</span><span class="op">)</span> <span class="op">=></span> <span class="var">x</span> <span class="op">=></span>
+  <span class="var">fns</span><span class="op">.</span><span class="fn">reduceRight</span><span class="op">(</span><span class="op">(</span><span class="var">v</span><span class="op">,</span> <span class="var">f</span><span class="op">)</span> <span class="op">=></span> <span class="fn">f</span><span class="op">(</span><span class="var">v</span><span class="op">)</span><span class="op">,</span> <span class="var">x</span><span class="op">)</span><span class="op">;</span>
+
+<span class="kw">const</span> <span class="var">glow</span> <span class="op">=</span> <span class="fn">compose</span><span class="op">(</span>
+  <span class="var">n</span> <span class="op">=></span> <span class="var">n</span> <span class="op">*</span> <span class="num">2</span><span class="op">,</span>
+  <span class="var">n</span> <span class="op">=></span> <span class="str">`#${n.toString(16).padStart(6, "0")}`</span><span class="op">,</span>
+  <span class="var">hex</span> <span class="op">=></span> <span class="op">(</span><span class="op">{</span> <span class="var">hex</span><span class="op">,</span> <span class="var">vibes</span><span class="op">:</span> <span class="str">"maximum"</span> <span class="op">}</span><span class="op">)</span><span class="op">,</span>
+<span class="op">)</span><span class="op">;</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Swift</span></div>
+        <pre><code><span class="kw">struct</span> <span class="type">Prism</span><span class="op">:</span> <span class="type">Identifiable</span> <span class="op">{</span>
+    <span class="kw">let</span> <span class="var">id</span> <span class="op">=</span> <span class="fn">UUID</span><span class="op">()</span>
+    <span class="kw">var</span> <span class="var">wavelength</span><span class="op">:</span> <span class="type">Double</span>
+    <span class="kw">var</span> <span class="var">label</span><span class="op">:</span> <span class="type">String</span>
+<span class="op">}</span>
+
+<span class="kw">func</span> <span class="fn">dazzle</span><span class="op">(</span><span class="var">bands</span><span class="op">:</span> <span class="op">[</span><span class="type">Prism</span><span class="op">]</span><span class="op">)</span> <span class="op">-></span> <span class="type">[</span><span class="type">Color</span><span class="op">]</span> <span class="op">{</span>
+    <span class="var">bands</span><span class="op">.</span><span class="fn">map</span> <span class="op">{</span> <span class="fn">Color</span><span class="op">(</span><span class="var">hue</span><span class="op">:</span> <span class="var">$0</span><span class="op">.</span><span class="var">wavelength</span> <span class="op">/</span> <span class="num">360</span><span class="op">)</span> <span class="op">}</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Kotlin</span></div>
+        <pre><code><span class="kw">data class</span> <span class="type">Pixel</span><span class="op">(</span><span class="kw">val</span> <span class="var">r</span><span class="op">:</span> <span class="type">Int</span><span class="op">,</span> <span class="kw">val</span> <span class="var">g</span><span class="op">:</span> <span class="type">Int</span><span class="op">,</span> <span class="kw">val</span> <span class="var">b</span><span class="op">:</span> <span class="type">Int</span><span class="op">)</span>
+
+<span class="kw">fun</span> <span class="fn">gradientRow</span><span class="op">(</span><span class="var">width</span><span class="op">:</span> <span class="type">Int</span><span class="op">)</span><span class="op">:</span> <span class="type">List</span><span class="op">&lt;</span><span class="type">Pixel</span><span class="op">&gt;</span> <span class="op">=</span>
+    <span class="op">(</span><span class="num">0</span> <span class="kw">until</span> <span class="var">width</span><span class="op">)</span><span class="op">.</span><span class="fn">map</span> <span class="op">{</span> <span class="var">x</span> <span class="op">-></span>
+        <span class="type">Pixel</span><span class="op">(</span><span class="var">x</span> <span class="op">*</span> <span class="num">255</span> <span class="op">/</span> <span class="var">width</span><span class="op">,</span> <span class="num">128</span><span class="op">,</span> <span class="num">255</span> <span class="op">-</span> <span class="var">x</span> <span class="op">*</span> <span class="num">255</span> <span class="op">/</span> <span class="var">width</span><span class="op">)</span>
+    <span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Ruby</span></div>
+        <pre><code><span class="kw">class</span> <span class="type">ChromaEngine</span>
+  <span class="kw">attr_reader</span> <span class="op">:</span><span class="var">swatches</span>
+
+  <span class="kw">def</span> <span class="fn">initialize</span><span class="op">(</span><span class="var">swatches</span> <span class="op">=</span> <span class="op">[</span><span class="str">:magenta</span><span class="op">,</span> <span class="str">:cyan</span><span class="op">,</span> <span class="str">:lime</span><span class="op">]</span><span class="op">)</span>
+    <span class="var">@swatches</span> <span class="op">=</span> <span class="var">swatches</span>
+  <span class="kw">end</span>
+
+  <span class="kw">def</span> <span class="fn">cycle</span>
+    <span class="var">swatches</span><span class="op">.</span><span class="fn">cycle</span><span class="op">.</span><span class="fn">take</span><span class="op">(</span><span class="num">12</span><span class="op">)</span><span class="op">.</span><span class="fn">map</span> <span class="op">{</span> <span class="op">|</span><span class="var">c</span><span class="op">|</span> <span class="str">"✦ #{c}"</span> <span class="op">}</span>
+  <span class="kw">end</span>
+<span class="kw">end</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Elixir</span></div>
+        <pre><code><span class="kw">defmodule</span> <span class="type">Aurora</span> <span class="kw">do</span>
+  <span class="kw">def</span> <span class="fn">stream</span><span class="op">(</span><span class="var">n</span><span class="op">)</span> <span class="kw">do</span>
+    <span class="num">1</span><span class="op">..</span><span class="var">n</span>
+    <span class="op">|></span> <span class="type">Stream</span><span class="op">.</span><span class="fn">map</span><span class="op">(</span><span class="kw">&amp;</span><span class="op">(</span><span class="var">rem</span><span class="op">(</span><span class="op">&amp;</span><span class="num">1</span> <span class="op">*</span> <span class="num">47</span><span class="op">,</span> <span class="num">360</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="op">|></span> <span class="type">Enum</span><span class="op">.</span><span class="fn">to_list</span><span class="op">(</span><span class="op">)</span>
+  <span class="kw">end</span>
+<span class="kw">end</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Haskell</span></div>
+        <pre><code><span class="kw">data</span> <span class="type">Hue</span> <span class="op">=</span> <span class="var">Rose</span> <span class="op">|</span> <span class="var">Teal</span> <span class="op">|</span> <span class="var">Gold</span> <span class="kw">deriving</span> <span class="op">(</span><span class="type">Show</span><span class="op">,</span> <span class="type">Enum</span><span class="op">)</span>
+
+<span class="var">spectrum</span> <span class="op">::</span> <span class="op">[</span><span class="type">Hue</span><span class="op">]</span>
+<span class="var">spectrum</span> <span class="op">=</span> <span class="fn">cycle</span> <span class="op">[</span><span class="var">Rose</span><span class="op">,</span> <span class="var">Teal</span><span class="op">,</span> <span class="var">Gold</span><span class="op">]</span>
+
+<span class="var">paint</span> <span class="op">::</span> <span class="type">Int</span> <span class="op">-></span> <span class="op">[</span><span class="type">Hue</span><span class="op">]</span>
+<span class="var">paint</span> <span class="var">n</span> <span class="op">=</span> <span class="fn">take</span> <span class="var">n</span> <span class="var">spectrum</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">C</span></div>
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdint.h&gt;</span>
+
+<span class="kw">typedef struct</span> <span class="op">{</span>
+    <span class="type">uint8_t</span> <span class="var">r</span><span class="op">,</span> <span class="var">g</span><span class="op">,</span> <span class="var">b</span><span class="op">;</span>
+<span class="op">}</span> <span class="type">RGB</span><span class="op">;</span>
+
+<span class="type">RGB</span> <span class="fn">lerp</span><span class="op">(</span><span class="type">RGB</span> <span class="var">a</span><span class="op">,</span> <span class="type">RGB</span> <span class="var">b</span><span class="op">,</span> <span class="type">float</span> <span class="var">t</span><span class="op">)</span> <span class="op">{</span>
+    <span class="type">RGB</span> <span class="var">out</span> <span class="op">=</span> <span class="op">{</span>
+        <span class="op">(</span><span class="type">uint8_t</span><span class="op">)(</span><span class="var">a</span><span class="op">.</span><span class="var">r</span> <span class="op">+</span> <span class="var">t</span> <span class="op">*</span> <span class="op">(</span><span class="var">b</span><span class="op">.</span><span class="var">r</span> <span class="op">-</span> <span class="var">a</span><span class="op">.</span><span class="var">r</span><span class="op">))</span><span class="op">,</span>
+        <span class="op">(</span><span class="type">uint8_t</span><span class="op">)(</span><span class="var">a</span><span class="op">.</span><span class="var">g</span> <span class="op">+</span> <span class="var">t</span> <span class="op">*</span> <span class="op">(</span><span class="var">b</span><span class="op">.</span><span class="var">g</span> <span class="op">-</span> <span class="var">a</span><span class="op">.</span><span class="var">g</span><span class="op">))</span><span class="op">,</span>
+        <span class="op">(</span><span class="type">uint8_t</span><span class="op">)(</span><span class="var">a</span><span class="op">.</span><span class="var">b</span> <span class="op">+</span> <span class="var">t</span> <span class="op">*</span> <span class="op">(</span><span class="var">b</span><span class="op">.</span><span class="var">b</span> <span class="op">-</span> <span class="var">a</span><span class="op">.</span><span class="var">b</span><span class="op">))</span><span class="op">,</span>
+    <span class="op">}</span><span class="op">;</span>
+    <span class="kw">return</span> <span class="var">out</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">C++</span></div>
+        <pre><code><span class="kw">template</span><span class="op">&lt;</span><span class="kw">typename</span> <span class="type">T</span><span class="op">&gt;</span>
+<span class="kw">concept</span> <span class="type">Colorful</span> <span class="op">=</span> <span class="fn">requires</span><span class="op">(</span><span class="type">T</span> <span class="var">c</span><span class="op">)</span> <span class="op">{</span>
+    <span class="op">{</span> <span class="var">c</span><span class="op">.</span><span class="var">to_hex</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span> <span class="op">-></span> <span class="type">std</span><span class="op">::</span><span class="type">string</span><span class="op">;</span>
+<span class="op">};</span>
+
+<span class="kw">auto</span> <span class="fn">neon_banner</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">return</span> <span class="type">std</span><span class="op">::</span><span class="fn">array</span><span class="op">{</span> <span class="str">"#ff6bcb"</span><span class="op">,</span> <span class="str">"#00f5ff"</span><span class="op">,</span> <span class="str">"#7cff7c"</span> <span class="op">}</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Java</span></div>
+        <pre><code><span class="kw">public sealed interface</span> <span class="type">Glow</span> <span class="kw">permits</span> <span class="type">Pulse</span><span class="op">,</span> <span class="type">Beam</span> <span class="op">{</span>
+    <span class="type">String</span> <span class="fn">hex</span><span class="op">(</span><span class="op">)</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">public record</span> <span class="type">Pulse</span><span class="op">(</span><span class="type">int</span> <span class="var">phase</span><span class="op">)</span> <span class="kw">implements</span> <span class="type">Glow</span> <span class="op">{</span>
+    <span class="kw">public</span> <span class="type">String</span> <span class="fn">hex</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="kw">return</span> <span class="str">"#ff6bcb"</span><span class="op">;</span> <span class="op">}</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">C#</span></div>
+        <pre><code><span class="kw">public readonly record struct</span> <span class="type">Swatch</span><span class="op">(</span><span class="type">byte</span> <span class="var">R</span><span class="op">,</span> <span class="type">byte</span> <span class="var">G</span><span class="op">,</span> <span class="type">byte</span> <span class="var">B</span><span class="op">)</span>
+<span class="op">{</span>
+    <span class="kw">public</span> <span class="type">string</span> <span class="fn">ToHex</span><span class="op">(</span><span class="op">)</span> <span class="op">=></span> <span class="str">$"#</span><span class="op">{</span><span class="var">R</span><span class="op">:</span><span class="var">X2</span><span class="op">}</span><span class="str"></span><span class="op">{</span><span class="var">G</span><span class="op">:</span><span class="var">X2</span><span class="op">}</span><span class="str"></span><span class="op">{</span><span class="var">B</span><span class="op">:</span><span class="var">X2</span><span class="op">}</span><span class="str">"</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="kw">var</span> <span class="var">palette</span> <span class="op">=</span> <span class="kw">new</span><span class="op">[]</span> <span class="op">{</span> <span class="kw">new</span> <span class="type">Swatch</span><span class="op">(</span><span class="num">255</span><span class="op">,</span><span class="num">107</span><span class="op">,</span><span class="num">203</span><span class="op">)</span> <span class="op">};</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">PHP</span></div>
+        <pre><code><span class="kw">&lt;?php</span>
+<span class="kw">declare</span><span class="op">(</span><span class="var">strict_types</span><span class="op">=</span><span class="num">1</span><span class="op">)</span><span class="op">;</span>
+
+<span class="kw">enum</span> <span class="type">Vibe</span><span class="op">:</span> <span class="type">string</span> <span class="op">{</span>
+    <span class="kw">case</span> <span class="var">Neon</span> <span class="op">=</span> <span class="str">'#00f5ff'</span><span class="op">;</span>
+    <span class="kw">case</span> <span class="var">Candy</span> <span class="op">=</span> <span class="str">'#ff6bcb'</span><span class="op">;</span>
+<span class="op">}</span>
+
+<span class="fn">array_map</span><span class="op">(</span><span class="kw">fn</span><span class="op">(</span><span class="type">Vibe</span> <span class="var">$v</span><span class="op">)</span> <span class="op">=></span> <span class="var">$v</span><span class="op">-></span><span class="fn">value</span><span class="op">,</span> <span class="type">Vibe</span><span class="op">::</span><span class="var">cases</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">;</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Lua</span></div>
+        <pre><code><span class="kw">local</span> <span class="var">palette</span> <span class="op">=</span> <span class="op">{</span>
+  <span class="var">magenta</span> <span class="op">=</span> <span class="op">{</span><span class="num">255</span><span class="op">,</span> <span class="num">107</span><span class="op">,</span> <span class="num">203</span><span class="op">}</span><span class="op">,</span>
+  <span class="var">cyan</span>    <span class="op">=</span> <span class="op">{</span><span class="num">0</span><span class="op">,</span> <span class="num">245</span><span class="op">,</span> <span class="num">255</span><span class="op">}</span><span class="op">,</span>
+<span class="op">}</span>
+
+<span class="kw">for</span> <span class="var">name</span><span class="op">,</span> <span class="var">rgb</span> <span class="kw">in</span> <span class="fn">pairs</span><span class="op">(</span><span class="var">palette</span><span class="op">)</span> <span class="kw">do</span>
+  <span class="fn">print</span><span class="op">(</span><span class="var">name</span><span class="op">,</span> <span class="fn">table.concat</span><span class="op">(</span><span class="var">rgb</span><span class="op">,</span> <span class="str">","</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">end</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Shell</span></div>
+        <pre><code><span class="cmt">#!/usr/bin/env bash</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="op">{</span><span class="num">0</span><span class="op">..</span><span class="num">5</span><span class="op">}</span><span class="op">;</span> <span class="kw">do</span>
+  <span class="fn">printf</span> <span class="str">"\033[38;5;%dm█\033[0m"</span> <span class="op">$((</span><span class="num">201</span> <span class="op">+</span> <span class="var">i</span> <span class="op">*</span> <span class="num">6</span><span class="op">))</span>
+<span class="kw">done</span>
+<span class="fn">echo</span> <span class="str">"  ← terminal rainbow"</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">WGSL</span></div>
+        <pre><code><span class="kw">@fragment</span>
+<span class="kw">fn</span> <span class="fn">main</span><span class="op">(</span><span class="op">@</span><span class="fn">location</span><span class="op">(</span><span class="num">0</span><span class="op">)</span> <span class="var">uv</span><span class="op">:</span> <span class="type">vec2</span><span class="op">&lt;</span><span class="type">f32</span><span class="op">&gt;)</span> <span class="op">-></span> <span class="type">vec4</span><span class="op">&lt;</span><span class="type">f32</span><span class="op">&gt;</span> <span class="op">{</span>
+  <span class="kw">let</span> <span class="var">hue</span> <span class="op">=</span> <span class="fn">fract</span><span class="op">(</span><span class="var">uv</span><span class="op">.</span><span class="var">x</span> <span class="op">+</span> <span class="var">uv</span><span class="op">.</span><span class="var">y</span> <span class="op">+</span> <span class="fn">sin</span><span class="op">(</span><span class="var">uv</span><span class="op">.</span><span class="var">x</span> <span class="op">*</span> <span class="num">12.0</span><span class="op">)</span> <span class="op">*</span> <span class="num">0.1</span><span class="op">)</span><span class="op">;</span>
+  <span class="kw">return</span> <span class="type">vec4</span><span class="op">&lt;</span><span class="type">f32</span><span class="op">&gt;</span><span class="op">(</span><span class="fn">hsv2rgb</span><span class="op">(</span><span class="var">hue</span><span class="op">,</span> <span class="num">0.9</span><span class="op">,</span> <span class="num">1.0</span><span class="op">)</span><span class="op">,</span> <span class="num">1.0</span><span class="op">)</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">JSON</span></div>
+        <pre><code><span class="op">{</span>
+  <span class="str">"theme"</span><span class="op">:</span> <span class="str">"cyber-neon"</span><span class="op">,</span>
+  <span class="str">"swatches"</span><span class="op">:</span> <span class="op">[</span>
+    <span class="op">{</span> <span class="str">"name"</span><span class="op">:</span> <span class="str">"magenta"</span><span class="op">,</span> <span class="str">"hex"</span><span class="op">:</span> <span class="str">"#ff6bcb"</span> <span class="op">}</span><span class="op">,</span>
+    <span class="op">{</span> <span class="str">"name"</span><span class="op">:</span> <span class="str">"cyan"</span><span class="op">,</span>    <span class="str">"hex"</span><span class="op">:</span> <span class="str">"#00f5ff"</span> <span class="op">}</span><span class="op">,</span>
+    <span class="op">{</span> <span class="str">"name"</span><span class="op">:</span> <span class="str">"lime"</span><span class="op">,</span>    <span class="str">"hex"</span><span class="op">:</span> <span class="str">"#7cff7c"</span> <span class="op">}</span>
+  <span class="op">]</span><span class="op">,</span>
+  <span class="str">"animated"</span><span class="op">:</span> <span class="kw">true</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">YAML</span></div>
+        <pre><code><span class="var">pipeline</span><span class="op">:</span>
+  <span class="var">name</span><span class="op">:</span> <span class="str">aurora-render</span>
+  <span class="var">stages</span><span class="op">:</span>
+    <span class="op">-</span> <span class="var">id</span><span class="op">:</span> <span class="str">compile</span>
+      <span class="var">shader</span><span class="op">:</span> <span class="str">neon.wgsl</span>
+    <span class="op">-</span> <span class="var">id</span><span class="op">:</span> <span class="str">present</span>
+      <span class="var">vsync</span><span class="op">:</span> <span class="kw">true</span>
+  <span class="var">colors</span><span class="op">:</span> <span class="op">[</span><span class="str">"#ff6bcb"</span><span class="op">,</span> <span class="str">"#00f5ff"</span><span class="op">,</span> <span class="str">"#7cff7c"</span><span class="op">]</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">GraphQL</span></div>
+        <pre><code><span class="kw">query</span> <span class="fn">NeonGallery</span><span class="op">(</span><span class="var">$limit</span><span class="op">:</span> <span class="type">Int!</span><span class="op">)</span> <span class="op">{</span>
+  <span class="var">swatches</span><span class="op">(</span><span class="var">first</span><span class="op">:</span> <span class="var">$limit</span><span class="op">)</span> <span class="op">{</span>
+    <span class="var">edges</span> <span class="op">{</span>
+      <span class="var">node</span> <span class="op">{</span>
+        <span class="var">hex</span>
+        <span class="var">vibe</span>
+        <span class="var">glowIntensity</span>
+      <span class="op">}</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+      <article class="card"><div class="card-inner">
+        <div class="card-head"><div class="dots"><span></span><span></span><span></span></div><span class="lang">Zig</span></div>
+        <pre><code><span class="kw">const</span> <span class="type">RGB</span> <span class="op">=</span> <span class="kw">struct</span> <span class="op">{</span> <span class="var">r</span><span class="op">:</span> <span class="type">u8</span><span class="op">,</span> <span class="var">g</span><span class="op">:</span> <span class="type">u8</span><span class="op">,</span> <span class="var">b</span><span class="op">:</span> <span class="type">u8</span> <span class="op">};</span>
+
+<span class="kw">pub fn</span> <span class="fn">rainbow</span><span class="op">(</span><span class="var">n</span><span class="op">:</span> <span class="type">usize</span><span class="op">)</span> <span class="op">!</span><span class="op">[</span><span class="op">]</span><span class="type">RGB</span> <span class="op">{</span>
+    <span class="kw">var</span> <span class="var">out</span> <span class="op">=</span> <span class="fn">try</span> <span class="var">allocator</span><span class="op">.</span><span class="fn">alloc</span><span class="op">(</span><span class="type">RGB</span><span class="op">,</span> <span class="var">n</span><span class="op">)</span><span class="op">;</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="var">out</span><span class="op">,</span> <span class="num">0</span><span class="op">..</span><span class="op">)</span> <span class="op">|</span><span class="op">*</span><span class="var">px</span><span class="op">,</span> <span class="var">i</span><span class="op">|</span> <span class="var">px</span><span class="op">.*</span> <span class="op">=</span> <span class="op">.</span><span class="op">{</span> <span class="op">.</span><span class="var">r</span> <span class="op">=</span> <span class="op">@</span><span class="fn">intCast</span><span class="op">(</span><span class="var">i</span> <span class="op">*</span> <span class="num">255</span> <span class="op">/</span> <span class="var">n</span><span class="op">)</span><span class="op">,</span> <span class="op">.</span><span class="var">g</span> <span class="op">=</span> <span class="num">128</span><span class="op">,</span> <span class="op">.</span><span class="var">b</span> <span class="op">=</span> <span class="num">255</span> <span class="op">};</span>
+    <span class="kw">return</span> <span class="var">out</span><span class="op">;</span>
+<span class="op">}</span></code></pre>
+      </div></article>
+
+    </div>
+
+    <footer>Open colorful-code-showcase.html in any browser for the full neon experience.</footer>
+  </main>
+</body>
+</html>
